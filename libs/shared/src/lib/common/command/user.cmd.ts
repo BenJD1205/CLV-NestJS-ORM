@@ -1,6 +1,7 @@
 export const AuthCMD = {
     REGISTER:'REGISTER',
     LOGIN: 'LOGIN',
+    GET_REFRESH_TOKEN: 'GET_REFRESH_TOKEN'
 }
 
 export const UserCMD = {

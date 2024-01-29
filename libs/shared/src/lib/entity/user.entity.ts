@@ -32,6 +32,9 @@ export class User {
   @Column({ name: "role" })
   role: string;
 
+  @Column({ name: "refresh_token" })
+  refreshToken: string;
+
   @CreateDateColumn({name:"created_at"})
   createdAt:Date
 

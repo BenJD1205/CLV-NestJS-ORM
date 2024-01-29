@@ -2,8 +2,6 @@ import {
   IsEmail,
   IsNotEmpty,
   IsString,
-  IsArray,
-  IsOptional
 } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
@@ -29,19 +27,15 @@ export class RegisterUserDto {
 }
 
 export class CreateUserDto extends PartialType(RegisterUserDto) {
-  @IsOptional()
   @IsString({ message: 'Gender is string!' })
   gender: string;
 
-  @IsOptional()
-  @IsString({ message: 'Address is string!' })
-  address: string;
-
   @IsString({message: 'Role is string!'})
-  @IsArray()
-  role: string[];
+  role: string;
 
-  @IsOptional()
-  @IsString({message: 'Office is string!'})
+  @IsString({message: 'Office code is string!'})
   office_code: string;
+
+  @IsString({message: 'Country code is string!'})
+  country_code: string;
 }

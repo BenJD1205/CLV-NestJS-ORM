@@ -1,4 +1,5 @@
-import { Controller} from '@nestjs/common';
+import { Controller, UseGuards} from '@nestjs/common';
+import { JwtGuard } from '@nest-training/shared/guard';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RegisterUserDto,LoginUserDto } from '@nest-training/shared/dto';
 import {AuthCMD} from '@nest-training/shared/command'
@@ -18,11 +19,16 @@ export class AuthController {
         return this.authService.login(userDto);
     }
 
-    // @MessagePattern({ cmd: 'verify-jwt' })
-    // @UseGuards(JwtGuard)
-    // async verifyJwt(
-    //     @Payload() payload: { jwt: string },
-    // ) {
-    //     return this.authService.verifyJwt(payload.jwt);
-    // }
+    @MessagePattern({cmd: AuthCMD.GET_REFRESH_TOKEN})
+    async getRefreshToken (@Payload() refreshTokenDto){
+        return this.authService.processNewToken(refreshTokenDto);
+    }
+
+    @MessagePattern({ cmd: 'verify-jwt' })
+    @UseGuards(JwtGuard)
+    async verifyJwt(
+        @Payload() payload: { jwt: string },
+    ) {
+        return this.authService.verifyJwt(payload.jwt);
+    }
 }

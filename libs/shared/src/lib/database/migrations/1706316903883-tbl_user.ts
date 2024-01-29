@@ -5,7 +5,7 @@ export class TblUser1706316903883 implements MigrationInterface {
      public async up(queryRunner: QueryRunner): Promise<void> {
         queryRunner.query(`
             CREATE TABLE USERS(
-                ID SERIAL PRIMARY KEY,
+                ID UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 user_name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
@@ -15,6 +15,7 @@ export class TblUser1706316903883 implements MigrationInterface {
                 gender VARCHAR(255) NULL,
                 phone VARCHAR(255) NULL,
                 role  VARCHAR(255) NULL DEFAULT 'USER', 
+                refresh_token VARCHAR(255) NULL,
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 deleted_at TIMESTAMP NULL DEFAULT NULL

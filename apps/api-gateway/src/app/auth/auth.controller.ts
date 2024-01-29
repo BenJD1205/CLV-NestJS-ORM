@@ -1,4 +1,4 @@
-import { Controller, Inject, Post, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Inject, Post, Body, BadRequestException, Get } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {RegisterUserDto, LoginUserDto} from '@nest-training/shared/dto'
 import {AuthCMD} from '@nest-training/shared/command'
@@ -24,6 +24,15 @@ export class AuthController {
         return this.userService.send({
             cmd: AuthCMD.LOGIN,
         }, loginUserDto).pipe(catchError((err) => {
+            throw new BadRequestException(err);
+        }))
+    }
+
+    @Get('refresh-token')
+    async getRefreshToken() {
+        return this.userService.send({
+            cmd: AuthCMD.GET_REFRESH_TOKEN,
+        }, {}).pipe(catchError((err) => {
             throw new BadRequestException(err);
         }))
     }

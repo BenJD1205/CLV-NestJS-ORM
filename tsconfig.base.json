@@ -20,6 +20,7 @@
       "@nest-training/shared/command": ["libs/shared/src/lib/common/command"],
       "@nest-training/shared/database": ["libs/shared/src/lib/database"],
       "@nest-training/shared/config": ["libs/shared/src/lib/config"],
+      "@nest-training/shared/guard": ["libs/shared/src/lib/guard"],
       "@nest-training/shared/decorator": [
         "libs/shared/src/lib/common/decorators"
       ],
@@ -27,6 +28,9 @@
       "@nest-training/shared/entity": ["libs/shared/src/lib/entity"],
       "@nest-training/shared/interceptor": [
         "libs/shared/src/lib/common/interceptor"
+      ],
+      "@nest-training/shared/interface": [
+        "libs/shared/src/lib/common/interfaces"
       ]
     }
   },
