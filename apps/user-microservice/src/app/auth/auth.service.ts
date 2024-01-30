@@ -32,7 +32,8 @@ export class AuthService {
     createAccessToken = (payload) => {
         const access_token = this.jwtService.sign(payload, {
         secret: this.configService.get<string>('JWT_SECRET'),
-        expiresIn: this.configService.get<string>('JWT_EXPIRATION'),
+        expiresIn:
+            ms(this.configService.get<string>('JWT_ACCESS_EXPIRATION')) / 10000,
         });
         return access_token;
     };
@@ -68,7 +69,7 @@ export class AuthService {
         }
 
         try {
-            const user = await this.jwtService.verify(jwt);
+            const user = await this.jwtService.verifyAsync(jwt);
             return user;
         } catch (error) {
             throw new UnauthorizedException();
