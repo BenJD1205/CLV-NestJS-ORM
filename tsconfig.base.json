@@ -18,14 +18,14 @@
     "paths": {
       "@nest-training/shared": ["libs/shared/src/index.ts"],
       "@nest-training/shared/command": ["libs/shared/src/lib/common/command"],
-      "@nest-training/shared/database": ["libs/shared/src/lib/database"],
       "@nest-training/shared/config": ["libs/shared/src/lib/config"],
-      "@nest-training/shared/guard": ["libs/shared/src/lib/guard"],
+      "@nest-training/shared/database": ["libs/shared/src/lib/database"],
       "@nest-training/shared/decorator": [
         "libs/shared/src/lib/common/decorators"
       ],
       "@nest-training/shared/dto": ["libs/shared/src/lib/dto"],
       "@nest-training/shared/entity": ["libs/shared/src/lib/entity"],
+      "@nest-training/shared/guard": ["libs/shared/src/lib/guard"],
       "@nest-training/shared/interceptor": [
         "libs/shared/src/lib/common/interceptor"
       ],
