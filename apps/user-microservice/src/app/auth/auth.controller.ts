@@ -24,7 +24,7 @@ export class AuthController {
         return this.authService.processNewToken(refreshTokenDto);
     }
 
-    @MessagePattern({ cmd: 'verify-jwt' })
+    @MessagePattern({ cmd: AuthCMD.VERIFY_JWT })
     @UseGuards(JwtGuard)
     async verifyJwt(
         @Payload() payload: { jwt: string },

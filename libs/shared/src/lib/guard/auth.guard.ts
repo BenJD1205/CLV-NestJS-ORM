@@ -9,6 +9,7 @@ import { Reflector } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, Observable, of, switchMap } from 'rxjs';
 import { IS_PUBLIC_KEY } from '../common/decorators';
+import { AuthCMD } from '../common/command/user.cmd';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -46,7 +47,7 @@ export class AuthGuard implements CanActivate {
 
     const [, jwt] = authHeaderParts;
 
-    return this.authService.send({ cmd: 'verify-jwt' }, { jwt }).pipe(
+    return this.authService.send({ cmd: AuthCMD.VERIFY_JWT }, { jwt }).pipe(
       switchMap(( user ) => {
         if (!user.exp) return of(false);
         request['user'] = user;
