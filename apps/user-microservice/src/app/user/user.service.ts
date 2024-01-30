@@ -1,9 +1,9 @@
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import {User} from '@nest-training/shared/entity'
 import { InjectRepository } from '@nestjs/typeorm';
 import { genSaltSync, hashSync, compareSync} from 'bcryptjs';
-import { Repository } from 'typeorm';
 import { UpdateUserDto } from '@nest-training/shared/dto';
 
 @Injectable()
@@ -48,11 +48,13 @@ export class UserService {
     }
 
     async getProfile(userId: string) {
-        return await this.userRepository.findOne({
+        const user = await this.userRepository.findOne({
             where: {
                 id: userId
-            }
+            },
         });
+        delete user.password
+        return user;
     }
 
     async update(userDto: UpdateUserDto) {
