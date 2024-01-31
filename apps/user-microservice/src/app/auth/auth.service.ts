@@ -54,8 +54,8 @@ export class AuthService {
 ;       return {
             email:findUser.email,
             name:findUser.userName,
-            access_token: accessToken,
-            refresh_token: refreshToken,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
         }
     }
 
