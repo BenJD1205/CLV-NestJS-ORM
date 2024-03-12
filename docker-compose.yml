@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  postgres:
+    image: "postgres:14.0"
+    ports:
+      - "5432:5432"
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      POSTGRES_USER: USER
+      POSTGRES_PASSWORD: USER
+      POSTGRES_DB: CHORUS
+    volumes:
+      - ./db-data/postgres/:/var/lib/postgresql/data
+  zookeeper:
+    image: bitnami/zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ZOO_ENABLE_AUTH=yes
+
+  kafka:
+    image: bitnami/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092

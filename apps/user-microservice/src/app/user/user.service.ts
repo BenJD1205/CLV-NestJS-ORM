@@ -1,16 +1,18 @@
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
-import { RpcException } from '@nestjs/microservices';
+import { Injectable, Inject } from '@nestjs/common';
+import { RpcException, ClientKafka} from '@nestjs/microservices';
 import {User} from '@nest-training/shared/entity'
 import { InjectRepository } from '@nestjs/typeorm';
 import { genSaltSync, hashSync, compareSync} from 'bcryptjs';
 import { UpdateUserDto } from '@nest-training/shared/dto';
+import { UserCMD } from '@nest-training/shared/command';
 
 @Injectable()
 export class UserService {  
     constructor(
         @InjectRepository(User)
         private userRepository: Repository<User>,
+        @Inject('NOTIFICATION_MICROSERVICE') private readonly notificationClient: ClientKafka
     ) { }
     
      getHashPassword = (password: string) => {
@@ -39,6 +41,12 @@ export class UserService {
             user.officeCode = userDto.office_code;
             user.countryCode = userDto.country_code;
         }
+        this.notificationClient.emit(UserCMD.CREATE, JSON.stringify({
+            title: 'Create User',
+            description: user.role === 'ADMIN' ? 'Admin have created new user' : 'New user have been registered',
+            user: user.id,
+            isRead: false
+        }));
         await this.userRepository.save(user);
         return user
     }
